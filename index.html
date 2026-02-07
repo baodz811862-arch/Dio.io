@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BAODZ VIP AREA</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+
+<style>
+    /* --- CẤU HÌNH CƠ BẢN --- */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #000;
+        background-image: url('https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=2000&auto=format&fit=crop');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        height: 100vh;
+        overflow: hidden;
+        color: white;
+    }
+    
+    /* Lớp phủ tối màu để làm nổi bật nội dung */
+    .overlay {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(3px);
+        z-index: 0;
+    }
+
+    /* --- PHẦN CHUNG CHO CÁC TRANG --- */
+    .page {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        display: flex; flex-direction: column; justify-content: center; align-items: center;
+        z-index: 1;
+        transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    /* --- TRANG 1: INTRO (CHÀO MỪNG) --- */
+    #page-intro {
+        text-align: center;
+    }
+    
+    .avatar-intro {
+        width: 150px; height: 150px;
+        border-radius: 50%;
+        border: 4px solid #00d2ff;
+        box-shadow: 0 0 30px #00d2ff;
+        margin-bottom: 20px;
+        animation: pulse 2s infinite;
+        object-fit: cover;
+    }
+
+    .intro-title {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 2.5rem;
+        text-transform: uppercase;
+        background: linear-gradient(90deg, #00d2ff, #ff00ea);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 10px;
+        text-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
+    }
+
+    .enter-btn {
+        padding: 15px 40px;
+        font-size: 1.2rem;
+        background: transparent;
+        color: #fff;
+        border: 2px solid #fff;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-family: 'Orbitron', sans-serif;
+        margin-top: 30px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .enter-btn:hover {
+        background: #fff;
+        color: #000;
+        box-shadow: 0 0 20px #fff;
+        transform: scale(1.1);
+    }
+
+    /* --- TRANG 2: MENU (DANH SÁCH LINK) --- */
+    #page-menu {
+        display: none; /* Mặc định ẩn */
+        opacity: 0;
+        transform: scale(0.9);
+        padding: 20px;
+        overflow-y: auto; /* Cho phép cuộn nếu nhiều nút */
+    }
+
+    .card {
+        background: rgba(20, 20, 30, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 30px;
+        border-radius: 20px;
+        width: 100%;
+        max-width: 450px;
+        text-align: center;
+        box-shadow: 0 0 50px rgba(0,0,0,0.5);
+        border-top: 3px solid #00d2ff;
+    }
+
+    .profile-mini {
+        width: 80px; height: 80px;
+        border-radius: 50%;
+        border: 2px solid #fff;
+        margin-top: -60px;
+        background: #000;
+        object-fit: cover;
+    }
+
+    .username {
+        font-size: 1.5rem;
+        margin: 10px 0 5px;
+        font-weight: bold;
+    }
+    
+    .bio {
+        font-size: 0.9rem;
+        color: #ccc;
+        margin-bottom: 25px;
+    }
+
+    .link-box {
+        display: flex;
+        align-items: center;
+        background: linear-gradient(90deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.1) 100%);
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 12px;
+        text-decoration: none;
+        color: white;
+        transition: all 0.3s;
+        border-left: 4px solid transparent;
+    }
+
+    .link-box:hover {
+        transform: translateX(5px);
+        background: rgba(255,255,255,0.15);
+        border-left: 4px solid #00d2ff;
+    }
+
+    .link-box i {
+        font-size: 1.5rem;
+        margin-right: 15px;
+        width: 30px;
+        text-align: center;
+    }
+
+    .link-text {
+        text-align: left;
+    }
+    
+    .link-title { font-weight: bold; display: block; }
+    .link-sub { font-size: 0.8rem; color: #aaa; }
+
+    /* --- MÀU SẮC RIÊNG CHO TỪNG NÚT --- */
+    .discord-icon { color: #5865F2; }
+    .youtube-icon { color: #FF0000; }
+    .download-icon { color: #00FF00; }
+    .facebook-icon { color: #1877F2; }
+
+    /* --- ANIMATION --- */
+    @keyframes pulse {
+        0% { box-shadow: 0 0 0 0 rgba(0, 210, 255, 0.7); }
+        70% { box-shadow: 0 0 0 20px rgba(0, 210, 255, 0); }
+        100% { box-shadow: 0 0 0 0 rgba(0, 210, 255, 0); }
+    }
+
+    /* Nút quay lại */
+    .back-btn {
+        margin-top: 20px;
+        background: transparent;
+        border: none;
+        color: #888;
+        cursor: pointer;
+        font-size: 0.9rem;
+    }
+    .back-btn:hover { color: #fff; text-decoration: underline; }
+
+</style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <div id="page-intro" class="page">
+        <img src="https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399993be9062f431c6da.jpg" alt="Avatar" class="avatar-intro">
+        <h1 class="intro-title">DIO SCRIPT</h1>
+        <p style="letter-spacing: 2px;">WELCOME TO MY WORLD</p>
+        
+        <button class="enter-btn" onclick="openMenu()">
+            <i class="fas fa-door-open"></i> TRUY CẬP
+        </button>
+    </div>
+
+    <div id="page-menu" class="page">
+        <div class="card">
+            <img src="https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399993be9062f431c6da.jpg" alt="Avatar" class="profile-mini">
+            <div class="username">DIO NO HACK 🇻🇳</div>
+            <div class="bio">Chia sẻ Script | Hack Game | Thủ thuật <br> Uy tín - Chất lượng - Miễn phí</div>
+
+            <a href="https://discord.gg/MjGt2bTWBS" class="link-box" target="_blank">
+                <i class="fab fa-discord discord-icon"></i>
+                <div class="link-text">
+                    <span class="link-title">Tham gia Discord VIP</span>
+                    <span class="link-sub">Nhận thông báo và giao lưu</span>
+                </div>
+            </a>
+
+            <a href="https://discord.gg/MjGt2bTWBS" class="link-box" target="_blank">
+                <i class="fas fa-cloud-download-alt download-icon"></i>
+                <div class="link-text">
+                    <span class="link-title">Tổng hợp Script Mới Nhất</span>
+                    <span class="link-sub">Delta, Hydrogen, Fluxus...</span>
+                </div>
+            </a>
+
+            <a href="https://discord.gg/MjGt2bTWBS" class="link-box" target="_blank">
+                <i class="fab fa-youtube youtube-icon"></i>
+                <div class="link-text">
+                    <span class="link-title">Kênh YouTube</span>
+                    <span class="link-sub">Xem hướng dẫn chi tiết</span>
+                </div>
+            </a>
+
+            <a href="https://discord.gg/MjGt2bTWBS" class="link-box" target="_blank">
+                <i class="fab fa-facebook facebook-icon"></i>
+                <div class="link-text">
+                    <span class="link-title">Liên hệ Admin</span>
+                    <span class="link-sub">Hỗ trợ trực tiếp</span>
+                </div>
+            </a>
+
+            <button class="back-btn" onclick="goBack()">QUAY LẠI TRANG CHỦ</button>
+        </div>
+    </div>
+
+    <script>
+        function openMenu() {
+            // Ẩn trang Intro
+            document.getElementById('page-intro').style.opacity = '0';
+            document.getElementById('page-intro').style.transform = 'scale(1.1)';
+            
+            setTimeout(() => {
+                document.getElementById('page-intro').style.display = 'none';
+                
+                // Hiện trang Menu
+                const menu = document.getElementById('page-menu');
+                menu.style.display = 'flex';
+                // Delay nhỏ để kích hoạt transition
+                setTimeout(() => {
+                    menu.style.opacity = '1';
+                    menu.style.transform = 'scale(1)';
+                }, 50);
+            }, 500);
+        }
+
+        function goBack() {
+            // Ẩn trang Menu
+            const menu = document.getElementById('page-menu');
+            menu.style.opacity = '0';
+            menu.style.transform = 'scale(0.9)';
+
+            setTimeout(() => {
+                menu.style.display = 'none';
+
+                // Hiện trang Intro
+                const intro = document.getElementById('page-intro');
+                intro.style.display = 'flex';
+                setTimeout(() => {
+                    intro.style.opacity = '1';
+                    intro.style.transform = 'scale(1)';
+                }, 50);
+            }, 500);
+        }
+    </script>
+</body>
+</html>
