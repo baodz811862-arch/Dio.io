@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BAODZ VIP AREA</title>
+<title>BAODZ VIP HUB</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
 
@@ -12,7 +12,7 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
         font-family: 'Poppins', sans-serif;
-        background-color: #000;
+        background-color: #050505;
         background-image: url('https://images.unsplash.com/photo-1538481199705-c710c4e965fc?q=80&w=2000&auto=format&fit=crop');
         background-size: cover;
         background-position: center;
@@ -21,266 +21,405 @@
         overflow: hidden;
         color: white;
     }
-    
-    /* Lớp phủ tối màu để làm nổi bật nội dung */
     .overlay {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0, 0, 0, 0.6);
-        backdrop-filter: blur(3px);
+        background: rgba(0, 0, 0, 0.75);
+        backdrop-filter: blur(5px);
         z-index: 0;
     }
 
-    /* --- PHẦN CHUNG CHO CÁC TRANG --- */
+    /* --- CÁC TRANG (PAGES) --- */
     .page {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        display: flex; flex-direction: column; justify-content: center; align-items: center;
+        display: none; /* Mặc định ẩn hết */
+        flex-direction: column; align-items: center;
         z-index: 1;
-        transition: opacity 0.5s ease, transform 0.5s ease;
+        transition: all 0.5s ease;
+        padding-top: 20px;
     }
+    /* Trang đầu tiên hiện sẵn */
+    #page-intro { display: flex; justify-content: center; }
 
-    /* --- TRANG 1: INTRO (CHÀO MỪNG) --- */
-    #page-intro {
-        text-align: center;
-    }
-    
+    /* --- TRANG 1: INTRO --- */
     .avatar-intro {
-        width: 150px; height: 150px;
+        width: 140px; height: 140px;
         border-radius: 50%;
-        border: 4px solid #00d2ff;
-        box-shadow: 0 0 30px #00d2ff;
+        border: 3px solid #00d2ff;
+        box-shadow: 0 0 25px #00d2ff;
         margin-bottom: 20px;
         animation: pulse 2s infinite;
         object-fit: cover;
     }
-
     .intro-title {
         font-family: 'Orbitron', sans-serif;
-        font-size: 2.5rem;
-        text-transform: uppercase;
+        font-size: 2.2rem;
         background: linear-gradient(90deg, #00d2ff, #ff00ea);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         margin-bottom: 10px;
-        text-shadow: 0 0 20px rgba(0, 210, 255, 0.5);
+        text-shadow: 0 0 15px rgba(0, 210, 255, 0.5);
     }
-
     .enter-btn {
-        padding: 15px 40px;
-        font-size: 1.2rem;
+        padding: 12px 35px;
+        font-size: 1.1rem;
         background: transparent;
         color: #fff;
-        border: 2px solid #fff;
-        border-radius: 30px;
+        border: 2px solid #00d2ff;
+        border-radius: 25px;
         cursor: pointer;
-        transition: all 0.3s;
         font-family: 'Orbitron', sans-serif;
-        margin-top: 30px;
-        position: relative;
-        overflow: hidden;
+        margin-top: 25px;
+        transition: 0.3s;
     }
+    .enter-btn:hover { background: #00d2ff; color: #000; box-shadow: 0 0 20px #00d2ff; }
 
-    .enter-btn:hover {
-        background: #fff;
-        color: #000;
-        box-shadow: 0 0 20px #fff;
-        transform: scale(1.1);
-    }
-
-    /* --- TRANG 2: MENU (DANH SÁCH LINK) --- */
-    #page-menu {
-        display: none; /* Mặc định ẩn */
-        opacity: 0;
-        transform: scale(0.9);
-        padding: 20px;
-        overflow-y: auto; /* Cho phép cuộn nếu nhiều nút */
-    }
-
-    .card {
-        background: rgba(20, 20, 30, 0.85);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+    /* --- TRANG 2: MENU CHÍNH --- */
+    .menu-box {
+        background: rgba(20, 20, 30, 0.9);
+        border: 1px solid rgba(255,255,255,0.1);
         padding: 30px;
         border-radius: 20px;
-        width: 100%;
-        max-width: 450px;
+        width: 90%; max-width: 400px;
         text-align: center;
-        box-shadow: 0 0 50px rgba(0,0,0,0.5);
-        border-top: 3px solid #00d2ff;
+        margin-top: 50px;
+        box-shadow: 0 0 30px rgba(0,0,0,0.8);
     }
-
-    .profile-mini {
-        width: 80px; height: 80px;
-        border-radius: 50%;
-        border: 2px solid #fff;
-        margin-top: -60px;
-        background: #000;
-        object-fit: cover;
-    }
-
-    .username {
-        font-size: 1.5rem;
-        margin: 10px 0 5px;
-        font-weight: bold;
-    }
-    
-    .bio {
-        font-size: 0.9rem;
-        color: #ccc;
-        margin-bottom: 25px;
-    }
-
     .link-box {
-        display: flex;
-        align-items: center;
-        background: linear-gradient(90deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.1) 100%);
-        padding: 15px;
-        margin-bottom: 15px;
-        border-radius: 12px;
-        text-decoration: none;
-        color: white;
-        transition: all 0.3s;
-        border-left: 4px solid transparent;
+        display: flex; align-items: center;
+        background: rgba(255,255,255,0.05);
+        padding: 12px; margin-bottom: 12px;
+        border-radius: 10px; text-decoration: none; color: white;
+        border-left: 3px solid transparent; transition: 0.3s;
     }
-
-    .link-box:hover {
-        transform: translateX(5px);
-        background: rgba(255,255,255,0.15);
-        border-left: 4px solid #00d2ff;
+    .link-box:hover { background: rgba(255,255,255,0.15); border-left: 3px solid #00d2ff; transform: translateX(5px); }
+    .link-box i { width: 30px; font-size: 1.4rem; text-align: center; margin-right: 10px; }
+    
+    /* --- TRANG 3: KHO SCRIPT (QUAN TRỌNG) --- */
+    #page-script {
+        width: 100%;
+        padding: 10px;
     }
-
-    .link-box i {
-        font-size: 1.5rem;
-        margin-right: 15px;
-        width: 30px;
-        text-align: center;
-    }
-
-    .link-text {
-        text-align: left;
+    .hub-container {
+        width: 100%; max-width: 600px;
+        height: 90vh;
+        background: rgba(15, 15, 20, 0.95);
+        border-radius: 15px;
+        display: flex; flex-direction: column;
+        overflow: hidden;
+        border: 1px solid #333;
     }
     
-    .link-title { font-weight: bold; display: block; }
-    .link-sub { font-size: 0.8rem; color: #aaa; }
-
-    /* --- MÀU SẮC RIÊNG CHO TỪNG NÚT --- */
-    .discord-icon { color: #5865F2; }
-    .youtube-icon { color: #FF0000; }
-    .download-icon { color: #00FF00; }
-    .facebook-icon { color: #1877F2; }
-
-    /* --- ANIMATION --- */
-    @keyframes pulse {
-        0% { box-shadow: 0 0 0 0 rgba(0, 210, 255, 0.7); }
-        70% { box-shadow: 0 0 0 20px rgba(0, 210, 255, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(0, 210, 255, 0); }
+    /* Header của Hub */
+    .hub-header {
+        padding: 15px;
+        background: linear-gradient(90deg, #1a1a2e, #16213e);
+        border-bottom: 1px solid #333;
+        display: flex; align-items: center; justify-content: space-between;
     }
+    .hub-title { font-family: 'Orbitron'; color: #00d2ff; font-weight: bold; }
 
-    /* Nút quay lại */
-    .back-btn {
-        margin-top: 20px;
-        background: transparent;
-        border: none;
-        color: #888;
+    /* Thanh tìm kiếm */
+    .search-box {
+        padding: 10px;
+        background: #0f0f13;
+    }
+    .search-input {
+        width: 100%;
+        padding: 10px 15px;
+        border-radius: 20px;
+        border: 1px solid #333;
+        background: #1a1a2e;
+        color: white;
+        outline: none;
+    }
+    .search-input:focus { border-color: #00d2ff; }
+
+    /* Tabs Danh mục */
+    .tabs-scroll {
+        display: flex;
+        overflow-x: auto;
+        padding: 10px;
+        gap: 10px;
+        background: #0f0f13;
+        scrollbar-width: none; /* Ẩn thanh cuộn */
+    }
+    .tab-btn {
+        padding: 8px 15px;
+        background: #222;
+        border: 1px solid #444;
+        color: #aaa;
+        border-radius: 15px;
+        white-space: nowrap;
         cursor: pointer;
         font-size: 0.9rem;
     }
-    .back-btn:hover { color: #fff; text-decoration: underline; }
+    .tab-btn.active {
+        background: #00d2ff;
+        color: #000;
+        border-color: #00d2ff;
+        font-weight: bold;
+    }
 
+    /* Danh sách Script */
+    .script-list {
+        flex: 1;
+        overflow-y: auto;
+        padding: 10px;
+    }
+
+    /* Khối Script từng cái */
+    .script-item {
+        background: #1c1c24;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 1px solid #333;
+    }
+    .script-header {
+        padding: 15px;
+        display: flex; align-items: center; justify-content: space-between;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+    .script-header:hover { background: #252530; }
+    .script-name { font-weight: bold; font-size: 0.95rem; }
+    .script-tag {
+        font-size: 0.7rem; padding: 2px 6px; border-radius: 4px;
+        background: #333; color: #bbb; margin-left: 10px;
+    }
+    
+    /* Nội dung Script (Code) - Ẩn mặc định */
+    .script-content {
+        display: none;
+        padding: 15px;
+        background: #111;
+        border-top: 1px solid #333;
+    }
+    .code-box {
+        background: #000;
+        padding: 10px;
+        border-radius: 5px;
+        font-family: monospace;
+        color: #0f0;
+        font-size: 0.8rem;
+        word-break: break-all;
+        margin-bottom: 10px;
+        border: 1px dashed #333;
+    }
+    .copy-btn {
+        width: 100%;
+        padding: 8px;
+        background: #00d2ff;
+        color: black;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .copy-btn:active { background: #00a3cc; }
+
+    /* Hiệu ứng mũi tên xoay */
+    .fa-chevron-down { transition: transform 0.3s; }
+    .script-item.open .fa-chevron-down { transform: rotate(180deg); }
+
+    /* Animation */
+    @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(0, 210, 255, 0.7); } 70% { box-shadow: 0 0 0 20px rgba(0, 210, 255, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 210, 255, 0); } }
+    .back-btn { background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; }
+
+    /* Màu icon */
+    .discord { color: #5865F2; } .youtube { color: #FF0000; } .script-icon { color: #00FF00; }
 </style>
 </head>
 <body>
-
     <div class="overlay"></div>
 
     <div id="page-intro" class="page">
-        <img src="https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399993be9062f431c6da.jpg" alt="Avatar" class="avatar-intro">
-        <h1 class="intro-title">DIO SCRIPT</h1>
-        <p style="letter-spacing: 2px;">WELCOME TO MY WORLD</p>
-        
-        <button class="enter-btn" onclick="openMenu()">
-            <i class="fas fa-door-open"></i> TRUY CẬP
-        </button>
+        <img src="https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399993be9062f431c6da.jpg" class="avatar-intro">
+        <h1 class="intro-title">BAODZ ARCH</h1>
+        <p>HACK & SCRIPT HUB</p>
+        <button class="enter-btn" onclick="navTo('page-menu')">TRUY CẬP <i class="fas fa-arrow-right"></i></button>
     </div>
 
     <div id="page-menu" class="page">
-        <div class="card">
-            <img src="https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399993be9062f431c6da.jpg" alt="Avatar" class="profile-mini">
-            <div class="username">DIO NO HACK 🇻🇳</div>
-            <div class="bio">Chia sẻ Script | Hack Game | Thủ thuật <br> Uy tín - Chất lượng - Miễn phí</div>
+        <div class="menu-box">
+            <img src="https://i.pinimg.com/736x/8b/16/7a/8b167af653c2399993be9062f431c6da.jpg" style="width:80px; height:80px; border-radius:50%; margin-top:-70px; border:2px solid white;">
+            <h2 style="margin:10px 0;">BAODZ ARCH 🇻🇳</h2>
+            <p style="color:#aaa; font-size:0.9rem; margin-bottom:20px;">Chia sẻ Script Blox Fruits, Delta, Fluxus...</p>
 
-            <a href="https://discord.gg/MjGt2bTWBS" class="link-box" target="_blank">
-                <i class="fab fa-discord discord-icon"></i>
-                <div class="link-text">
-                    <span class="link-title">Tham gia Discord VIP</span>
-                    <span class="link-sub">Nhận thông báo và giao lưu</span>
+            <div class="link-box" onclick="navTo('page-script')" style="cursor: pointer; background: rgba(0, 210, 255, 0.1); border-left: 3px solid #00d2ff;">
+                <i class="fas fa-code script-icon"></i>
+                <div>
+                    <span style="display:block; font-weight:bold; color:#00d2ff;">KHO SCRIPT VIP</span>
+                    <span style="font-size:0.8rem; color:#ccc;">Tìm kiếm & Copy Script</span>
                 </div>
+            </div>
+
+            <a href="https://discord.gg/MjGt2bTWBS" target="_blank" class="link-box">
+                <i class="fab fa-discord discord"></i> <span>Tham gia Discord</span>
+            </a>
+            <a href="https://youtube.com" target="_blank" class="link-box">
+                <i class="fab fa-youtube youtube"></i> <span>Kênh YouTube</span>
             </a>
 
-            <a href="https://discord.gg/MjGt2bTWBS" class="link-box" target="_blank">
-                <i class="fas fa-cloud-download-alt download-icon"></i>
-                <div class="link-text">
-                    <span class="link-title">Tổng hợp Script Mới Nhất</span>
-                    <span class="link-sub">Delta, Hydrogen, Fluxus...</span>
-                </div>
-            </a>
+            <button onclick="navTo('page-intro')" style="margin-top:20px; background:none; border:none; color:#666; cursor:pointer;">Quay lại</button>
+        </div>
+    </div>
 
-            <a href="https://discord.gg/MjGt2bTWBS" class="link-box" target="_blank">
-                <i class="fab fa-youtube youtube-icon"></i>
-                <div class="link-text">
-                    <span class="link-title">Kênh YouTube</span>
-                    <span class="link-sub">Xem hướng dẫn chi tiết</span>
-                </div>
-            </a>
+    <div id="page-script" class="page">
+        <div class="hub-container">
+            <div class="hub-header">
+                <button class="back-btn" onclick="navTo('page-menu')"><i class="fas fa-arrow-left"></i></button>
+                <div class="hub-title">SCRIPT HUB</div>
+                <div style="width:20px;"></div>
+            </div>
 
-            <a href="https://discord.gg/MjGt2bTWBS" class="link-box" target="_blank">
-                <i class="fab fa-facebook facebook-icon"></i>
-                <div class="link-text">
-                    <span class="link-title">Liên hệ Admin</span>
-                    <span class="link-sub">Hỗ trợ trực tiếp</span>
-                </div>
-            </a>
+            <div class="search-box">
+                <input type="text" id="searchInput" class="search-input" placeholder="Tìm tên game, script..." onkeyup="filterScripts()">
+            </div>
 
-            <button class="back-btn" onclick="goBack()">QUAY LẠI TRANG CHỦ</button>
+            <div class="tabs-scroll">
+                <button class="tab-btn active" onclick="filterCategory('all', this)">Tất cả</button>
+                <button class="tab-btn" onclick="filterCategory('bloxfruits', this)">Blox Fruits</button>
+                <button class="tab-btn" onclick="filterCategory('petsim', this)">Pet Sim 99</button>
+                <button class="tab-btn" onclick="filterCategory('delta', this)">Delta/Fluxus</button>
+            </div>
+
+            <div id="scriptContainer" class="script-list">
+
+                <div class="script-item" data-category="bloxfruits">
+                    <div class="script-header" onclick="toggleScript(this)">
+                        <div>
+                            <span class="script-name">Hoho Hub V3</span>
+                            <span class="script-tag">Blox Fruits</span>
+                        </div>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="script-content">
+                        <div class="code-box" id="code1">loadstring(game:HttpGet('https://raw.githubusercontent.com/acsu123/HOHO_H/main/Loading_UI'))()</div>
+                        <button class="copy-btn" onclick="copyCode('code1')">SAO CHÉP SCRIPT</button>
+                    </div>
+                </div>
+
+                <div class="script-item" data-category="bloxfruits">
+                    <div class="script-header" onclick="toggleScript(this)">
+                        <div>
+                            <span class="script-name">W-Azure Auto Farm</span>
+                            <span class="script-tag">Farm Level</span>
+                        </div>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="script-content">
+                        <div class="code-box" id="code2">loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/3b2169cf53bc6104dabe8e19562e5cc2.lua"))()</div>
+                        <button class="copy-btn" onclick="copyCode('code2')">SAO CHÉP SCRIPT</button>
+                    </div>
+                </div>
+
+                <div class="script-item" data-category="petsim">
+                    <div class="script-header" onclick="toggleScript(this)">
+                        <div>
+                            <span class="script-name">Redz Hub Pet 99</span>
+                            <span class="script-tag">Pet Sim</span>
+                        </div>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="script-content">
+                        <div class="code-box" id="code3">loadstring(game:HttpGet("https://raw.githubusercontent.com/REDzHUB/PetSim99/main/Loader.lua"))()</div>
+                        <button class="copy-btn" onclick="copyCode('code3')">SAO CHÉP SCRIPT</button>
+                    </div>
+                </div>
+
+                <div class="script-item" data-category="delta">
+                    <div class="script-header" onclick="toggleScript(this)">
+                        <div>
+                            <span class="script-name">Fix Lag Roblox</span>
+                            <span class="script-tag">Tools</span>
+                        </div>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="script-content">
+                        <div class="code-box" id="code4">loadstring(game:HttpGet("https://raw.githubusercontent.com/TurboLite/Script/main/FixLag.lua"))()</div>
+                        <button class="copy-btn" onclick="copyCode('code4')">SAO CHÉP SCRIPT</button>
+                    </div>
+                </div>
+
+            </div>
         </div>
     </div>
 
     <script>
-        function openMenu() {
-            // Ẩn trang Intro
-            document.getElementById('page-intro').style.opacity = '0';
-            document.getElementById('page-intro').style.transform = 'scale(1.1)';
+        // Chuyển trang
+        function navTo(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+            const page = document.getElementById(pageId);
+            page.style.display = 'flex';
+        }
+
+        // Mở/Đóng Script (Accordion)
+        function toggleScript(header) {
+            const item = header.parentElement;
+            const content = header.nextElementSibling;
             
-            setTimeout(() => {
-                document.getElementById('page-intro').style.display = 'none';
+            // Đóng các cái khác đang mở (nếu muốn chỉ mở 1 cái 1 lúc)
+            /* document.querySelectorAll('.script-content').forEach(c => {
+                if (c !== content) c.style.display = 'none';
+            }); */
+
+            if (content.style.display === "block") {
+                content.style.display = "none";
+                item.classList.remove('open');
+            } else {
+                content.style.display = "block";
+                item.classList.add('open');
+            }
+        }
+
+        // Sao chép code
+        function copyCode(id) {
+            const codeText = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(codeText).then(() => {
+                alert("Đã sao chép Script thành công!");
+            }).catch(err => {
+                alert("Lỗi sao chép, hãy copy thủ công.");
+            });
+        }
+
+        // Lọc theo Tab (Category)
+        function filterCategory(cat, btn) {
+            // Active nút bấm
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const items = document.querySelectorAll('.script-item');
+            items.forEach(item => {
+                if (cat === 'all' || item.getAttribute('data-category') === cat) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
+        // Tìm kiếm Script
+        function filterScripts() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const items = document.querySelectorAll('.script-item');
+            
+            items.forEach(item => {
+                const name = item.querySelector('.script-name').innerText.toLowerCase();
+                const tag = item.querySelector('.script-tag').innerText.toLowerCase();
                 
-                // Hiện trang Menu
-                const menu = document.getElementById('page-menu');
-                menu.style.display = 'flex';
-                // Delay nhỏ để kích hoạt transition
-                setTimeout(() => {
-                    menu.style.opacity = '1';
-                    menu.style.transform = 'scale(1)';
-                }, 50);
-            }, 500);
+                // Nếu đang ở tab cụ thể, chỉ tìm trong tab đó (hoặc tìm tất cả nếu muốn)
+                // Ở đây mình cho tìm tất cả trong danh sách hiện có
+                if (name.includes(input) || tag.includes(input)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
         }
 
-        function goBack() {
-            // Ẩn trang Menu
-            const menu = document.getElementById('page-menu');
-            menu.style.opacity = '0';
-            menu.style.transform = 'scale(0.9)';
-
-            setTimeout(() => {
-                menu.style.display = 'none';
-
-                // Hiện trang Intro
-                const intro = document.getElementById('page-intro');
-                intro.style.display = 'flex';
-                setTimeout(() => {
-                    intro.style.opacity = '1';
-                    intro.style.transform = 'scale(1)';
-                }, 50);
-            }, 500);
-        }
+        // Mặc định hiện trang Intro
+        navTo('page-intro');
     </script>
 </body>
 </html>
